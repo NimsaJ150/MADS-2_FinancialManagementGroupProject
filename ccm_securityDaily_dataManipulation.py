@@ -54,4 +54,4 @@ return_sd.reset_index()
 return_annual = pd.concat([return_avg, return_sd], axis=1).reset_index()
 return_annual.columns = ['LPERMNO', 'year', 'avg_return', 'sd_return']
 
-return_annual.to_csv(path_or_buf='/Users/carlasuzanneweidner/Downloads/return_annual.csv')
+return_annual.to_csv(path_or_buf='/Users/carlasuzanneweidner/Downloads/return_annual.csv', index=False)
