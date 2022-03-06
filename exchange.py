@@ -11,6 +11,7 @@ Load data
 # import data
 company_data_raw = pd.read_csv("data/GSFM_CRSP_Compustat_2006_-_2021.csv")
 ceo_data_raw = pd.read_csv("data/py3mgn6xhyhchn42.csv")  # "data/Data_by_CEO.xlsx", )
+ccm_fundamentals_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
 
 company_data_raw.head()
 company_data_raw.head()
