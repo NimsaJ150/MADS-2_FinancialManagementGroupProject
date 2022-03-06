@@ -11,7 +11,7 @@ Load data
 # import data
 ceo_data_raw = pd.read_csv("data/Execucomp_2006-2021.csv")  # "data/Data_by_CEO.xlsx", )
 company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
-price_data_raw = pd.read_csv("data/_________________.csv")
+price_data_raw = pd.read_csv("data/return_annual.csv")
 
 company_data_raw.head()
 ceo_data_raw.head()
@@ -35,7 +35,7 @@ price_data = price_data_raw[ceo_cols]
 data_joined = ceo_data.join(company_data.set_index(['GVKEY', 'fyear']), on=['GVKEY', 'YEAR'], how='left', lsuffix='',
                             rsuffix='', sort=False)
 
-data_joined = data_joined.join(price_data.set_index(['LPERMNO', 'fyear']), on=['LPERMNO', 'YEAR'], how='left', lsuffix='',
+data_joined = data_joined.join(price_data.set_index(['LPERMNO', 'year']), on=['LPERMNO', 'YEAR'], how='left', lsuffix='',
                                rsuffix='', sort=False)
 
 """
