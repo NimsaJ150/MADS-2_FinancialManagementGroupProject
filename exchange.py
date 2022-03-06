@@ -9,12 +9,12 @@ Load data
 """
 
 # import data
-company_data_raw = pd.read_csv("data/GSFM_CRSP_Compustat_2006_-_2021.csv")
+# company_data_raw = pd.read_csv("data/GSFM_CRSP_Compustat_2006_-_2021.csv")
 ceo_data_raw = pd.read_csv("data/py3mgn6xhyhchn42.csv")  # "data/Data_by_CEO.xlsx", )
-ccm_fundamentals_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
+company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
 
 company_data_raw.head()
-company_data_raw.head()
+ceo_data_raw.head()
 
 company_data_raw_columns = company_data_raw.columns
 company_cols = ['GVKEY', 'prcc_f', 'ajex', 'ajp', 'fyear']
@@ -25,11 +25,14 @@ ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'PCEO']
 company_data = company_data_raw[company_cols]
 
 ceo_data = ceo_data_raw[ceo_cols]
-a = ceo_data[ceo_data.PCEO == "CEO"]
+ceo_data = ceo_data[ceo_data.PCEO == "CEO"]
 
 # join data
 data_joined = ceo_data.join(company_data.set_index(['GVKEY', 'fyear']), on=['GVKEY', 'YEAR'], how='left', lsuffix='',
                             rsuffix='', sort=False)
+
+data_joined = data_joined.join(company_data.set_index(['LPERMNO', 'fyear']), on=['LPERMNO', 'YEAR'], how='left', lsuffix='',
+                               rsuffix='', sort=False)
 
 """
 Preprocess data
