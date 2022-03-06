@@ -24,7 +24,6 @@ ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'PCEO']
 price_data_raw_columns = price_data_raw.columns
 price_cols = []
 
-
 # filter data
 company_data = company_data_raw[company_cols]
 
@@ -78,6 +77,12 @@ Additional features
 # percentage change in stock prices
 
 # -> group for single CEOs - avg_change_in_sp
+
+"""
+Fixed effects
+"""
+
+
 
 """
 Linear Regression
