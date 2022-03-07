@@ -18,13 +18,13 @@ ceo_data_raw.head()
 company_data_raw_columns = company_data_raw.columns
 company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear']
 ceo_data_raw_columns = ceo_data_raw.columns
-ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO']
+ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO', 'CONAME', 'EXECID']
 price_data_raw_columns = price_data_raw.columns
 price_cols = []
 
 # filter data
 company_data = company_data_raw[company_cols]
-company_data['fyear'] = company_data['fyear'].astype(int) #--gives a warning, value set to copy instead of view
+company_data['fyear'] = company_data['fyear'].astype(int)  # --gives a warning, value set to copy instead of view
 #  SettingWithCopyWarning:
 # A value is trying to be set on a copy of a slice from a DataFrame.
 # Try using .loc[row_indexer,col_indexer] = value instead
@@ -33,7 +33,7 @@ company_data['fyear'] = company_data['fyear'].astype(int) #--gives a warning, va
 ceo_data = ceo_data_raw[ceo_cols]
 ceo_data = ceo_data[ceo_data.CEOANN == "CEO"]
 
-#drop age with nans - about 100 rows removed
+# drop age with nans - about 100 rows removed
 ceo_data = ceo_data[ceo_data['AGE'].notna()]
 
 price_data = price_data_raw
@@ -43,7 +43,6 @@ price_data = price_data_raw
 data_joined = company_data.join(price_data.set_index(['LPERMNO', 'year']), on=['LPERMNO', 'fyear'], how='inner',
                                 lsuffix='',
                                 rsuffix='', sort=False)
-
 
 data_joined = data_joined.join(ceo_data.set_index(['GVKEY', 'YEAR']), on=['GVKEY', 'fyear'], how='inner', lsuffix='',
                                rsuffix='', sort=False)
@@ -75,19 +74,29 @@ data_joined['dummy_chairman'] = if_founder
 data_joined['dummy_chairman_president'] = data_joined['TITLE'].str.contains('|'.join(['chairmam', 'president']))
 
 # drop columns only important for joining
-data_joined.drop(['GVKEY', 'CO_PER_ROL', 'TITLE'], axis=1, inplace=True) #ajex, ajp removed
+data_joined.drop(['CO_PER_ROL', 'TITLE'], axis=1, inplace=True)  # ajex, ajp removed
 
 """
 Additional features
 """
-# 3 year requirement for managers
-# BECAMECEO LEFTOFC
+# 3 year requirement for managers-----------------------------
 data_joined['BECAMECEO'] = pd.to_datetime(data_joined['BECAMECEO'], format='%Y%m%d')
 data_joined['LEFTOFC'] = pd.to_datetime(data_joined['LEFTOFC'], format='%Y%m%d')
 
-# data_joined['3Y_THRESH'] = (data_joined['LEFTOFC']-data_joined['BECAMECEO'])/365.35 #incomplete
-# data_joined['3Y_THRESH'] >= 3
+data_joined['3Y_THRESH'] = data_joined['LEFTOFC'].dt.year - data_joined['BECAMECEO'].dt.year
+data_joined = data_joined[data_joined['3Y_THRESH'] >= 3]  # lol no change because all ceo's so far have stayed>= 3 yr
 
+# drop column used for 3yr requirement
+data_joined.drop(['3Y_THRESH'], axis=1, inplace=True)
+# --------------------------------------------------------------
+# at least 2 company requiremnt for managers -------------------
+# for each EXEC ID - at least 2 distinct GVKEY
+tempdf = ceo_data_raw
+var = tempdf[tempdf['EXECID'] == 15827] #manually checking
+
+# ceo_group = data_joined.groupby('EXECID')['GVKEY'].apply(lambda ser: ser.unique())
+# ceo_group.head()
+# --------------------------------------------------------------
 
 # print(data_joined["JOINED_CO"].isnull().sum())
 # print(data_joined["JOINED_CO"])
@@ -95,8 +104,6 @@ data_joined['LEFTOFC'] = pd.to_datetime(data_joined['LEFTOFC'], format='%Y%m%d')
 # how many years as CEO - ceo_tenure
 # PROBLEM - NULL VALUES, negative values?? :)
 temp = pd.DataFrame(data_joined, columns=['BECAMECEO', 'LEFTOFC', 'LEFTCO', 'JOINED_CO'])
-temp['LEFTOFC'] = pd.to_datetime(temp['LEFTOFC'], format='%Y%m%d')
-temp['BECAMECEO'] = pd.to_datetime(temp['BECAMECEO'], format='%Y%m%d')
 temp['LEFTCO'] = pd.to_datetime(temp['LEFTCO'], format='%Y%m%d')
 temp['JOINED_CO'] = pd.to_datetime(temp['JOINED_CO'], format='%Y%m%d')
 
@@ -114,7 +121,6 @@ data_joined['working_days'] = (temp['LEFTCO'] - temp['JOINED_CO']).dt.days
 
 # drop columns only important for calculating date related attributes
 data_joined.drop(['JOINED_CO', 'BECAMECEO', 'LEFTCO', 'LEFTOFC'], axis=1, inplace=True)
-
 
 """
 Fixed effects
