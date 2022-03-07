@@ -76,10 +76,10 @@ Additional features
 """
 # 3 year requirement for managers
 # BECAMECEO LEFTOFC
-# data_joined['BECAMECEO'] = pd.to_datetime(data_joined['BECAMECEO'], format='%Y%m%d')
-# data_joined['LEFTOFC'] = pd.to_datetime(data_joined['LEFTOFC'], format='%Y%m%d')
+data_joined['BECAMECEO'] = pd.to_datetime(data_joined['BECAMECEO'], format='%Y%m%d')
+data_joined['LEFTOFC'] = pd.to_datetime(data_joined['LEFTOFC'], format='%Y%m%d')
 
-# data_joined['3Y_THRESH'] = (data_joined['LEFTOFC']-data_joined['BECAMECEO'])/365.35 #incomplete
+data_joined['3Y_THRESH'] = (data_joined['LEFTOFC']-data_joined['BECAMECEO'])/365.35 #incomplete
 # data_joined['3Y_THRESH'] >= 3
 
 
