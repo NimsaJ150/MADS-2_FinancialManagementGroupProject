@@ -9,18 +9,18 @@ Load data
 """
 
 # import data
-ceo_data_raw = pd.read_csv("data/Execucomp_2006-2021.csv")  # "data/Data_by_CEO.xlsx", )
+ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021_MTL.csv")
 company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
-price_data_raw = pd.read_csv("data/_________________.csv")
+# price_data_raw = pd.read_csv("data/_________________.csv")
 
 company_data_raw.head()
 ceo_data_raw.head()
 
 company_data_raw_columns = company_data_raw.columns
-company_cols = ['GVKEY', 'prcc_f', 'ajex', 'ajp', 'fyear']
+company_cols = ['GVKEY', 'prcc_f', 'fyear']
 ceo_data_raw_columns = ceo_data_raw.columns
 ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'PCEO', 'LEFTOFC']
-price_data_raw_columns = price_data_raw.columns
+# price_data_raw_columns = price_data_raw.columns
 price_cols = []
 
 # filter data
@@ -29,14 +29,14 @@ company_data = company_data_raw[company_cols]
 ceo_data = ceo_data_raw[ceo_cols]
 ceo_data = ceo_data[ceo_data.PCEO == "CEO"]
 
-price_data = price_data_raw[ceo_cols]
+# price_data = price_data_raw[ceo_cols]
 
 # join data
 data_joined = ceo_data.join(company_data.set_index(['GVKEY', 'fyear']), on=['GVKEY', 'YEAR'], how='left', lsuffix='',
                             rsuffix='', sort=False)
 
-data_joined = data_joined.join(price_data.set_index(['LPERMNO', 'fyear']), on=['LPERMNO', 'YEAR'], how='left', lsuffix='',
-                               rsuffix='', sort=False)
+# data_joined = data_joined.join(price_data.set_index(['LPERMNO', 'fyear']), on=['LPERMNO', 'YEAR'], how='left', lsuffix='',
+# rsuffix='', sort=False)
 
 """
 Preprocess data
@@ -65,13 +65,19 @@ data_joined['dummy_chairman'] = if_founder
 data_joined['dummy_chairman_president'] = data_joined['TITLE'].str.contains('|'.join(['chairmam', 'president']))
 
 # drop columns only important for joining
-data_joined.drop(['GVKEY', 'CO_PER_ROL', 'PCEO', 'ajex', 'ajp', 'TITLE'], axis=1, inplace=True)
+data_joined.drop(['GVKEY', 'CO_PER_ROL', 'PCEO', 'TITLE'], axis=1, inplace=True)
 
 """
 Additional features
 """
 # 3 year requirement for managers
 # BECAMECEO LEFTOFC
+data_joined['BECAMECEO'] = pd.to_datetime(data_joined['BECAMECEO'], format='%Y%m%d')
+data_joined['LEFTOFC'] = pd.to_datetime(data_joined['LEFTOFC'], format='%Y%m%d')
+
+data_joined['3Y_THRESH'] = (data_joined['LEFTOFC']-data_joined['BECAMECEO'])/365.35 #incomplete
+# data_joined['3Y_THRESH'] >= 3
+
 
 # how many years as CEO - ceo_tenure
 # how many years working there -
@@ -88,7 +94,6 @@ Fixed effects
 """
 Linear Regression
 """
-
 X = data_joined.drop('prcc_f', axis=1)
 y = data_joined['prcc_f']
 lr = LinearRegression()
