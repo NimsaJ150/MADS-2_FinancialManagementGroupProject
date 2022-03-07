@@ -11,32 +11,36 @@ Load data
 # import data
 ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021_MTL.csv")
 company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
-# price_data_raw = pd.read_csv("data/_________________.csv")
+price_data_raw = pd.read_csv("data/return_annual.csv")
 
 company_data_raw.head()
 ceo_data_raw.head()
 
 company_data_raw_columns = company_data_raw.columns
-company_cols = ['GVKEY', 'prcc_f', 'fyear']
+company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear']
 ceo_data_raw_columns = ceo_data_raw.columns
 ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'PCEO', 'LEFTOFC']
-# price_data_raw_columns = price_data_raw.columns
+price_data_raw_columns = price_data_raw.columns
 price_cols = []
 
 # filter data
 company_data = company_data_raw[company_cols]
+company_data['fyear'] = company_data['fyear'].astype(int)
 
 ceo_data = ceo_data_raw[ceo_cols]
 ceo_data = ceo_data[ceo_data.PCEO == "CEO"]
 
-# price_data = price_data_raw[ceo_cols]
+price_data = price_data_raw
 
 # join data
-data_joined = ceo_data.join(company_data.set_index(['GVKEY', 'fyear']), on=['GVKEY', 'YEAR'], how='left', lsuffix='',
-                            rsuffix='', sort=False)
 
-# data_joined = data_joined.join(price_data.set_index(['LPERMNO', 'fyear']), on=['LPERMNO', 'YEAR'], how='left', lsuffix='',
-# rsuffix='', sort=False)
+data_joined = company_data.join(price_data.set_index(['LPERMNO', 'year']), on=['LPERMNO', 'fyear'], how='inner',
+                                lsuffix='',
+                                rsuffix='', sort=False)
+
+
+data_joined = data_joined.join(ceo_data.set_index(['GVKEY', 'YEAR']), on=['GVKEY', 'fyear'], how='inner', lsuffix='',
+                               rsuffix='', sort=False)
 
 """
 Preprocess data
@@ -65,7 +69,7 @@ data_joined['dummy_chairman'] = if_founder
 data_joined['dummy_chairman_president'] = data_joined['TITLE'].str.contains('|'.join(['chairmam', 'president']))
 
 # drop columns only important for joining
-data_joined.drop(['GVKEY', 'CO_PER_ROL', 'PCEO', 'TITLE'], axis=1, inplace=True)
+data_joined.drop(['GVKEY', 'CO_PER_ROL', 'PCEO', 'TITLE'], axis=1, inplace=True) #ajex, ajp removed
 
 """
 Additional features
@@ -88,8 +92,6 @@ data_joined['3Y_THRESH'] = (data_joined['LEFTOFC']-data_joined['BECAMECEO'])/365
 """
 Fixed effects
 """
-
-
 
 """
 Linear Regression
