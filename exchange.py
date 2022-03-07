@@ -19,16 +19,19 @@ ceo_data_raw.head()
 company_data_raw_columns = company_data_raw.columns
 company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear']
 ceo_data_raw_columns = ceo_data_raw.columns
-ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'PCEO', 'LEFTOFC']
+ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC']
 price_data_raw_columns = price_data_raw.columns
 price_cols = []
 
 # filter data
 company_data = company_data_raw[company_cols]
-company_data['fyear'] = company_data['fyear'].astype(int)
+company_data.loc['fyear'] = company_data['fyear'].astype(int) #--gives a warning, value set to copy instead of view
 
 ceo_data = ceo_data_raw[ceo_cols]
-ceo_data = ceo_data[ceo_data.PCEO == "CEO"]
+ceo_data = ceo_data[ceo_data.CEOANN == "CEO"]
+
+#drop age with nans - about 100 rows removed
+ceo_data = ceo_data[ceo_data['AGE'].notna()]
 
 price_data = price_data_raw
 
@@ -69,7 +72,7 @@ data_joined['dummy_chairman'] = if_founder
 data_joined['dummy_chairman_president'] = data_joined['TITLE'].str.contains('|'.join(['chairmam', 'president']))
 
 # drop columns only important for joining
-data_joined.drop(['GVKEY', 'CO_PER_ROL', 'PCEO', 'TITLE'], axis=1, inplace=True) #ajex, ajp removed
+data_joined.drop(['GVKEY', 'CO_PER_ROL', 'TITLE'], axis=1, inplace=True) #ajex, ajp removed
 
 """
 Additional features
@@ -79,7 +82,7 @@ Additional features
 data_joined['BECAMECEO'] = pd.to_datetime(data_joined['BECAMECEO'], format='%Y%m%d')
 data_joined['LEFTOFC'] = pd.to_datetime(data_joined['LEFTOFC'], format='%Y%m%d')
 
-data_joined['3Y_THRESH'] = (data_joined['LEFTOFC']-data_joined['BECAMECEO'])/365.35 #incomplete
+# data_joined['3Y_THRESH'] = (data_joined['LEFTOFC']-data_joined['BECAMECEO'])/365.35 #incomplete
 # data_joined['3Y_THRESH'] >= 3
 
 
@@ -96,12 +99,12 @@ Fixed effects
 """
 Linear Regression
 """
-X = data_joined.drop('prcc_f', axis=1)
-y = data_joined['prcc_f']
-lr = LinearRegression()
-
-lr.fit(X, y)
-lr.coef_
-
-coefficients = pd.concat([pd.DataFrame(X.columns), pd.DataFrame(np.transpose(lr.coef_))], axis=1)
-coefficients
+# X = data_joined.drop('prcc_f', axis=1)
+# y = data_joined['prcc_f']
+# lr = LinearRegression()
+#
+# lr.fit(X, y)
+# lr.coef_
+#
+# coefficients = pd.concat([pd.DataFrame(X.columns), pd.DataFrame(np.transpose(lr.coef_))], axis=1)
+# coefficients
