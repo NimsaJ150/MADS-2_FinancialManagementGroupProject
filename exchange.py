@@ -16,16 +16,17 @@ company_data_raw.head()
 ceo_data_raw.head()
 
 company_data_raw_columns = company_data_raw.columns
-company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA', 'Tobins_Q', 'Cash_Flow', 
+company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA', 'Tobins_Q', 'Cash_Flow',
                 'Leverage', 'Investment', 'Cash_Holdings', 'Div_over_Earn', 'SQ_A']
 ceo_data_raw_columns = ceo_data_raw.columns
-ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO', 'CONAME', 'EXECID']
+ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO',
+            'CONAME', 'EXECID']
 price_data_raw_columns = price_data_raw.columns
 price_cols = []
 
 # filter data
 company_data = company_data_raw[company_cols]
-company_data['fyear'] = company_data['fyear'].astype(int)  # --gives a warning, value set to copy instead of view
+# company_data['fyear'] = company_data['fyear'].astype(int)  # --gives a warning, value set to copy instead of view
 #  SettingWithCopyWarning:
 # A value is trying to be set on a copy of a slice from a DataFrame.
 # Try using .loc[row_indexer,col_indexer] = value instead
@@ -75,12 +76,12 @@ data_joined['dummy_chairman'] = if_founder
 data_joined['dummy_chairman_president'] = data_joined['TITLE'].str.contains('|'.join(['chairmam', 'president']))
 
 # drop columns only important for joining
-data_joined.drop(['TITLE'], axis=1, inplace=True)  
-
+data_joined.drop(['TITLE'], axis=1, inplace=True)
 
 """
 Additional features
 """
+
 
 # print(data_joined.shape)
 # print(data_joined.isnull().sum(axis=0))  # return number of nan vals for each column 
@@ -92,6 +93,7 @@ def fix_becameceo(row):
         return row['JOINED_CO']
     return row['BECAMECEO']
 
+
 # print(data_joined['BECAMECEO'].isnull().sum())
 
 # checking if the date exists by grouping --> it doesn't
@@ -100,7 +102,9 @@ def fix_becameceo(row):
 # print(ceo_group['BECAMECEO'].isnull().sum())
 
 # setting the start date as the JOINED_CO date --> from 282 Nan values to 265 (should we drop others??)
-data_joined['BECAMECEO'] = data_joined.apply(lambda row: fix_becameceo(row), axis = 1)
+data_joined['BECAMECEO'] = data_joined.apply(lambda row: fix_becameceo(row), axis=1)
+
+
 # print(data_joined['BECAMECEO'].isnull().sum())
 
 # if ceo has Nan for LEFTOFC, we set it to 31.12.2020 - we assume the person is still the CEO of the company
@@ -110,12 +114,13 @@ def fix_leftofc(row):
         return '20201231'
     return row['LEFTOFC']
 
+
 # print(data_joined['LEFTOFC'].isnull().sum()) # 8975 Nan values
 # ceo_group = pd.DataFrame()
 # ceo_group['LEFTOFC'] = data_joined.groupby('CO_PER_ROL')['LEFTOFC'].apply(lambda ser: ser.unique())  # doesn't help
 # print(ceo_group['LEFTOFC'].isnull().sum())
 
-data_joined['LEFTOFC'] = data_joined.apply(lambda row: fix_leftofc(row), axis = 1)
+data_joined['LEFTOFC'] = data_joined.apply(lambda row: fix_leftofc(row), axis=1)
 # print(data_joined['LEFTOFC'].isnull().sum()) # 0 Nan
 
 # 3 year requirement for managers-----------------------------
@@ -135,7 +140,7 @@ data_joined.drop(['3Y_THRESH'], axis=1, inplace=True)
 # at least 2 company requiremnt for managers -------------------
 # for each EXEC ID - at least 2 distinct GVKEY
 tempdf = ceo_data_raw
-var = tempdf[tempdf['EXECID'] == 15827] #manually checking
+var = tempdf[tempdf['EXECID'] == 15827]  # manually checking
 
 # # ceo_group = data_joined.groupby('EXECID')['GVKEY'].apply(lambda ser: ser.unique())
 # # ceo_group.head()
@@ -155,7 +160,9 @@ data_joined['ceo_tenure'] = (data_joined['LEFTOFC'] - data_joined['BECAMECEO']).
 # -> group for single CEOs - avg_change_in_sp
 
 # drop columns only important for calculating date related attributes
-data_joined.drop(['JOINED_CO', 'BECAMECEO', 'LEFTCO', 'LEFTOFC', 'CO_PER_ROL', 'CEOANN', 'CONAME'], axis=1, inplace=True)
+data_joined.drop(['JOINED_CO', 'BECAMECEO', 'LEFTCO', 'LEFTOFC', 'CO_PER_ROL', 'CEOANN', 'CONAME', 'LPERMNO', 'prcc_f'],
+                 axis=1,
+                 inplace=True)
 
 # removing nan rows in the end
 # print(data_joined.shape)
@@ -167,16 +174,50 @@ data_joined.dropna(inplace=True)
 Fixed effects
 """
 
+from linearmodels import PanelOLS, RandomEffects, OLS
+import statsmodels.api as sm
+
+data_model = data_joined.set_index(['fyear', 'GVKEY'])
+
+X = sm.add_constant(data_model.drop('avg_return', axis=1))
+y = data_model.avg_return
+
+mod = RandomEffects(y, X, check_rank=False)
+re_res = mod.fit()
+print(re_res)
+
+mod = PanelOLS(y, X, check_rank=False)
+re_res = mod.fit()
+print(re_res)
+
+###########################
+df_demean = data_joined.copy()
+
+means = pd.DataFrame()
+
+for column in df_demean.columns.tolist():
+    # calculate the entity mean
+    means[column] = df_demean.groupby('GVKEY')[column].transform(np.mean)
+    # demean, subtract each row by the entity-mean
+    df_demean[column] = df_demean[column] - means[column]
+
+X2 = df_demean.drop('avg_return', axis=1)
+y2 = df_demean.avg_return
+
+model = OLS(y2, X2)
+results2 = model.fit()
+print(results2.summary())
+
+
 """
 Linear Regression
 """
-print(data_joined.info)
 
-X = data_joined.drop('prcc_f', axis=1)
-y = data_joined['prcc_f']
+# X = data_joined.drop('avg_return', axis=1)
+# y = data_joined['avg_return']
 lr = LinearRegression()
 
-lr.fit(X, y)
+lr.fit(X2, y2)
 lr.coef_
 
 coefficients = pd.concat([pd.DataFrame(X.columns), pd.DataFrame(np.transpose(lr.coef_))], axis=1)
