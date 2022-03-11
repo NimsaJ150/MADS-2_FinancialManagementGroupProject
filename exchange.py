@@ -32,7 +32,7 @@ company_data = company_data_raw[company_cols]
 
 ceo_data = ceo_data_raw[ceo_cols]
 ceo_data = ceo_data[ceo_data.CEOANN == "CEO"]
-
+# --------pls dont delete this (Irene)
 # drop age with nans - about 100 rows removed
 ceo_data = ceo_data[ceo_data['AGE'].notna()]
 
