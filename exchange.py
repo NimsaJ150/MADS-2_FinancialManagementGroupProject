@@ -78,6 +78,11 @@ data_joined['dummy_chairman_president'] = data_joined['TITLE'].str.contains('|'.
 # drop columns only important for joining
 data_joined.drop(['TITLE'], axis=1, inplace=True)
 
+data_joined['dummy_founder'].fillna(False)
+data_joined['dummy_president'].fillna(False)
+data_joined['dummy_chairman'].fillna(False)
+data_joined['dummy_chairman_president'].fillna(False)
+
 """
 Additional features
 """
