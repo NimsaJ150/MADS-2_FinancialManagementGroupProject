@@ -145,11 +145,13 @@ data_joined.drop(['3Y_THRESH'], axis=1, inplace=True)
 # at least 2 company requiremnt for managers -------------------
 # for each EXEC ID - at least 2 distinct GVKEY
 tempdf = data_joined
-var = data_joined[data_joined['EXECID'] == 17580] #manually checking
+var = data_joined[data_joined['EXECID'] == 17580]  # manually checking
 
 ceo_group = data_joined.groupby('EXECID')['GVKEY'].nunique()
-data_joined['ceo_group'] = ceo_group[0]
-print(ceo_group)
+ceo_group.name = 'ceo_group'
+
+data_joined = data_joined.join(ceo_group, on=['EXECID'], how='inner', lsuffix='',
+                               rsuffix='', sort=False)
 
 # --------------------------------------------------------------
 
