@@ -16,7 +16,7 @@ ceo_data_raw.head()
 
 company_data_raw_columns = company_data_raw.columns
 company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA', 'Tobins_Q', 'Cash_Flow',
-                'Leverage', 'Investment', 'Cash_Holdings', 'Div_over_Earn', 'SQ_A', 'aqc']
+                'Leverage', 'Investment', 'Cash_Holdings', 'Div_over_Earn', 'SG_A', 'aqc']
 ceo_data_raw_columns = ceo_data_raw.columns
 ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO',
             'CONAME', 'EXECID']
@@ -147,8 +147,10 @@ data_joined.drop(['3Y_THRESH'], axis=1, inplace=True)
 tempdf = data_joined
 var = data_joined[data_joined['EXECID'] == 17580] #manually checking
 
-ceo_group = data_joined.groupby('EXECID')['GVKEY'].unique()
-ceo_group.head()
+ceo_group = data_joined.groupby('EXECID')['GVKEY'].nunique()
+data_joined['ceo_group'] = ceo_group[0]
+print(ceo_group)
+
 # --------------------------------------------------------------
 
 
