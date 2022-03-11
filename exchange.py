@@ -17,7 +17,7 @@ ceo_data_raw.head()
 
 company_data_raw_columns = company_data_raw.columns
 company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA', 'Tobins_Q', 'Cash_Flow',
-                'Leverage', 'Investment', 'Cash_Holdings', 'Div_over_Earn', 'SQ_A']
+                'Leverage', 'Investment', 'Cash_Holdings', 'Div_over_Earn', 'SQ_A', 'aqc']
 ceo_data_raw_columns = ceo_data_raw.columns
 ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO',
             'CONAME', 'EXECID']
@@ -166,9 +166,10 @@ data_joined['ceo_tenure'] = (data_joined['LEFTOFC'] - data_joined['BECAMECEO']).
 # -> group for single CEOs - avg_change_in_sp
 
 # drop columns only important for calculating date related attributes
-data_joined.drop(['JOINED_CO', 'BECAMECEO', 'LEFTCO', 'LEFTOFC', 'CO_PER_ROL', 'CEOANN', 'CONAME', 'LPERMNO', 'prcc_f'],
-                 axis=1,
-                 inplace=True)
+data_joined.drop(
+    ['JOINED_CO', 'BECAMECEO', 'LEFTCO', 'LEFTOFC', 'CO_PER_ROL', 'CEOANN', 'CONAME', 'LPERMNO', 'prcc_f', 'EXECID'],
+    axis=1,
+    inplace=True)
 
 # removing nan rows in the end
 # print(data_joined.shape)
@@ -180,77 +181,41 @@ data_joined.dropna(inplace=True)
 Fixed effects
 """
 
-from linearmodels import PanelOLS, RandomEffects, OLS
+from linearmodels import PanelOLS, OLS
 import statsmodels.api as sm
 
-data_model = data_joined.set_index(['fyear', 'GVKEY'])
+data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
 
+data_model.drop('sd_return', axis=1, inplace=True)
 X = sm.add_constant(data_model.drop('avg_return', axis=1))
 y = data_model.avg_return
 
-mod = RandomEffects(y, X, check_rank=False)
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=False)
 re_res = mod.fit()
 print(re_res)
 
-mod = PanelOLS(y, X, check_rank=False)
+#####
+
+data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
+
+data_model.drop('avg_return', axis=1, inplace=True)
+X = sm.add_constant(data_model.drop('sd_return', axis=1))
+y = data_model.sd_return
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=False)
 re_res = mod.fit()
 print(re_res)
-
 
 ###########################
 
+data_model = data_joined.set_index(['GVKEY']).copy(deep=True)
+data_model = data_model[['AGE', 'fyear', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder', 'Tobins_Q']]
 
-def demean(fixed_eff_var, predict_var):
-    df_demean = data_joined.copy(deep=True)
-    means = pd.DataFrame()
+X = sm.add_constant(data_model.drop('Tobins_Q', axis=1))
+y = data_model.Tobins_Q
 
-    for column in df_demean.columns.tolist():
-        # calculate the entity mean
-        means[column] = df_demean.groupby(fixed_eff_var)[column].transform(np.mean)
-        # demean, subtract each row by the entity-mean
-        df_demean[column] = df_demean[column] - means[column]
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=False)
+re_res = mod.fit()
+print(re_res)
 
-    # drop FE column
-    df_demean.drop(fixed_eff_var, axis=1, inplace=True)
-
-    # set X and y
-    X = df_demean.drop(predict_var, axis=1)
-    y = df_demean[predict_var]
-
-    return X, y
-
-
-X, y = demean('GVKEY', 'avg_return')
-X.dtypes
-model = OLS(y, X)
-results2 = model.fit()
-print(results2.summary())
-
-X, y = demean('GVKEY', 'sd_return')
-model = OLS(y, X)
-results2 = model.fit()
-print(results2.summary())
-
-X, y = demean('fyear', 'avg_return')
-model = OLS(y, X)
-results2 = model.fit()
-print(results2.summary())
-
-X, y = demean('fyear', 'sd_return')
-model = OLS(y, X)
-results2 = model.fit()
-print(results2.summary())
-
-"""
-Linear Regression
-"""
-
-# X = data_joined.drop('avg_return', axis=1)
-# y = data_joined['avg_return']
-lr = LinearRegression()
-
-lr.fit(X2, y2)
-lr.coef_
-
-coefficients = pd.concat([pd.DataFrame(X.columns), pd.DataFrame(np.transpose(lr.coef_))], axis=1)
-print(coefficients)
+###########################
