@@ -190,7 +190,7 @@ import statsmodels.api as sm
 ###########################
 # models for predicting avg_return (all vars)
 
-data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
+data_model = data_joined.set_index(['GVKEY', 'fyear', ]).copy(deep=True)
 
 data_model.drop('sd_return', axis=1, inplace=True)
 X = sm.add_constant(data_model.drop('avg_return', axis=1))
@@ -211,7 +211,7 @@ print(re_res)
 ###########################
 # models for predicting sd_return (all vars)
 
-data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
+data_model = data_joined.set_index(['GVKEY', 'fyear']).copy(deep=True)
 
 data_model.drop('avg_return', axis=1, inplace=True)
 X = sm.add_constant(data_model.drop('sd_return', axis=1))
@@ -232,10 +232,10 @@ print(re_res)
 ###########################
 # models for predicting avg_return (only CEO vars)
 
-data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
+data_model = data_joined.set_index(['GVKEY', 'fyear']).copy(deep=True)
 data_model = data_model[
-    ['AGE', 'fyear', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder',
-     'Tobins_Q']]
+    ['AGE', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder',
+     'ceo_group', 'avg_return', 'sd_return']]
 
 data_model.drop('sd_return', axis=1, inplace=True)
 X = sm.add_constant(data_model.drop('avg_return', axis=1))
@@ -256,10 +256,10 @@ print(re_res)
 ###########################
 # models for predicting sd_return (only CEO vars)
 
-data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
+data_model = data_joined.set_index(['GVKEY', 'fyear']).copy(deep=True)
 data_model = data_model[
-    ['AGE', 'fyear', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder',
-     'Tobins_Q']]
+    ['AGE', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder',
+     'ceo_group', 'avg_return', 'sd_return']]
 
 data_model.drop('avg_return', axis=1, inplace=True)
 X = sm.add_constant(data_model.drop('sd_return', axis=1))
