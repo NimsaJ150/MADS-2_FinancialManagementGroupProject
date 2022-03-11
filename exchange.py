@@ -179,11 +179,14 @@ data_joined.dropna(inplace=True)
 # print(data_joined.shape)
 
 """
-Fixed effects
+Fixed effects models
 """
 
-from linearmodels import PanelOLS, OLS
+from linearmodels import PanelOLS
 import statsmodels.api as sm
+
+###########################
+# models for predicting avg_return (all vars)
 
 data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
 
@@ -191,11 +194,20 @@ data_model.drop('sd_return', axis=1, inplace=True)
 X = sm.add_constant(data_model.drop('avg_return', axis=1))
 y = data_model.avg_return
 
-mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=False)
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=True)
 re_res = mod.fit()
 print(re_res)
 
-#####
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=False)
+re_res = mod.fit()
+print(re_res)
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=True)
+re_res = mod.fit()
+print(re_res)
+
+###########################
+# models for predicting sd_return (all vars)
 
 data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
 
@@ -203,20 +215,62 @@ data_model.drop('avg_return', axis=1, inplace=True)
 X = sm.add_constant(data_model.drop('sd_return', axis=1))
 y = data_model.sd_return
 
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=True)
+re_res = mod.fit()
+print(re_res)
+
 mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=False)
 re_res = mod.fit()
 print(re_res)
 
-###########################
-
-data_model = data_joined.set_index(['GVKEY']).copy(deep=True)
-data_model = data_model[['AGE', 'fyear', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder', 'Tobins_Q']]
-
-X = sm.add_constant(data_model.drop('Tobins_Q', axis=1))
-y = data_model.Tobins_Q
-
-mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=False)
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=True)
 re_res = mod.fit()
 print(re_res)
 
 ###########################
+# models for predicting avg_return (only CEO vars)
+
+data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
+data_model = data_model[
+    ['AGE', 'fyear', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder',
+     'Tobins_Q']]
+
+data_model.drop('sd_return', axis=1, inplace=True)
+X = sm.add_constant(data_model.drop('avg_return', axis=1))
+y = data_model.avg_return
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=True)
+re_res = mod.fit()
+print(re_res)
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=False)
+re_res = mod.fit()
+print(re_res)
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=True)
+re_res = mod.fit()
+print(re_res)
+
+###########################
+# models for predicting sd_return (only CEO vars)
+
+data_model = data_joined.set_index(['fyear', 'GVKEY']).copy(deep=True)
+data_model = data_model[
+    ['AGE', 'fyear', 'ceo_tenure', 'dummy_chairman_president', 'dummy_chairman', 'dummy_president', 'dummy_founder',
+     'Tobins_Q']]
+
+data_model.drop('avg_return', axis=1, inplace=True)
+X = sm.add_constant(data_model.drop('sd_return', axis=1))
+y = data_model.sd_return
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=True)
+re_res = mod.fit()
+print(re_res)
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=True, time_effects=False)
+re_res = mod.fit()
+print(re_res)
+
+mod = PanelOLS(y, X, drop_absorbed=True, check_rank=False, entity_effects=False, time_effects=True)
+re_res = mod.fit()
+print(re_res)
