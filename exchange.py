@@ -6,7 +6,6 @@ from sklearn.linear_model import LinearRegression
 """
 Load data
 """
-
 # import data
 ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021_MTL.csv")
 company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
@@ -90,7 +89,7 @@ Additional features
 
 
 # print(data_joined.shape)
-# print(data_joined.isnull().sum(axis=0))  # return number of nan vals for each column 
+# print(data_joined.isnull().sum(axis=0))  # return number of nan vals for each column
 
 # fixing the date stuff
 # if ceo has Nan for BECAMECEO, we check if it exists when grouping by CO_PER_ROL or set it to JOIN_CO if it exists
@@ -145,11 +144,11 @@ data_joined.drop(['3Y_THRESH'], axis=1, inplace=True)
 # --------------------------------------------------------------
 # at least 2 company requiremnt for managers -------------------
 # for each EXEC ID - at least 2 distinct GVKEY
-tempdf = ceo_data_raw
-var = tempdf[tempdf['EXECID'] == 15827]  # manually checking
+tempdf = data_joined
+var = data_joined[data_joined['EXECID'] == 17580] #manually checking
 
-# # ceo_group = data_joined.groupby('EXECID')['GVKEY'].apply(lambda ser: ser.unique())
-# # ceo_group.head()
+ceo_group = data_joined.groupby('EXECID')['GVKEY'].unique()
+ceo_group.head()
 # --------------------------------------------------------------
 
 
@@ -173,7 +172,7 @@ data_joined.drop(
 
 # removing nan rows in the end
 # print(data_joined.shape)
-# print(data_joined.isnull().sum(axis=0))  
+# print(data_joined.isnull().sum(axis=0))
 data_joined.dropna(inplace=True)
 # print(data_joined.shape)
 
