@@ -78,6 +78,7 @@ data_joined['dummy_chairman_president'] = data_joined['TITLE'].str.contains('|'.
 # drop columns only important for joining
 data_joined.drop(['TITLE'], axis=1, inplace=True)
 
+# expect CEOs with nan in the title column to be only CEO and having no other position
 data_joined['dummy_founder'].fillna(False)
 data_joined['dummy_president'].fillna(False)
 data_joined['dummy_chairman'].fillna(False)
@@ -195,24 +196,50 @@ mod = PanelOLS(y, X, check_rank=False)
 re_res = mod.fit()
 print(re_res)
 
+
 ###########################
-df_demean = data_joined.copy()
 
-means = pd.DataFrame()
 
-for column in df_demean.columns.tolist():
-    # calculate the entity mean
-    means[column] = df_demean.groupby('GVKEY')[column].transform(np.mean)
-    # demean, subtract each row by the entity-mean
-    df_demean[column] = df_demean[column] - means[column]
+def demean(fixed_eff_var, predict_var):
+    df_demean = data_joined.copy(deep=True)
+    means = pd.DataFrame()
 
-X2 = df_demean.drop('avg_return', axis=1)
-y2 = df_demean.avg_return
+    for column in df_demean.columns.tolist():
+        # calculate the entity mean
+        means[column] = df_demean.groupby(fixed_eff_var)[column].transform(np.mean)
+        # demean, subtract each row by the entity-mean
+        df_demean[column] = df_demean[column] - means[column]
 
-model = OLS(y2, X2)
+    # drop FE column
+    df_demean.drop(fixed_eff_var, axis=1, inplace=True)
+
+    # set X and y
+    X = df_demean.drop(predict_var, axis=1)
+    y = df_demean[predict_var]
+
+    return X, y
+
+
+X, y = demean('GVKEY', 'avg_return')
+X.dtypes
+model = OLS(y, X)
 results2 = model.fit()
 print(results2.summary())
 
+X, y = demean('GVKEY', 'sd_return')
+model = OLS(y, X)
+results2 = model.fit()
+print(results2.summary())
+
+X, y = demean('fyear', 'avg_return')
+model = OLS(y, X)
+results2 = model.fit()
+print(results2.summary())
+
+X, y = demean('fyear', 'sd_return')
+model = OLS(y, X)
+results2 = model.fit()
+print(results2.summary())
 
 """
 Linear Regression
