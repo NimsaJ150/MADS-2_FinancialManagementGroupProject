@@ -30,6 +30,8 @@ sec_daily['adj_prccd'] = (sec_daily['prccd'] / sec_daily['ajexdi']) * sec_daily[
 sec_daily['year'] = sec_daily['datadate'].astype(str).str[0:4]
 stdev_csv = sec_daily.groupby(by=['LPERMNO', 'year'])['adj_prccd'].std()
 stdev_csv.reset_index()
+
+
 stdev_csv.to_csv(path_or_buf='/Users/carlasuzanneweidner/Downloads/crsp_stdev_annual.csv', index=False)
 
 
@@ -59,6 +61,7 @@ stdev_csv.to_csv(path_or_buf='/Users/carlasuzanneweidner/Downloads/crsp_stdev_an
 # for company in unique_lp:
 #     returns = sec_daily.loc[(sec_daily['LPERMNO']==unique_lp)]
 #
+
 # return_avg = sec_daily.groupby(by=['LPERMNO', 'year'])['return'].mean()
 # return_sd = sec_daily.groupby(by=['LPERMNO', 'year'])['return'].std()
 #
