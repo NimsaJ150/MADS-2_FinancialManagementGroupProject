@@ -8,7 +8,7 @@ Load data
 """
 
 # import data
-sec_daily_all = pd.read_csv("/Users/carlasuzanneweidner/PycharmProjects/MADS-2_FinancialManagementGroupProject/data/security_daily.csv")
+sec_daily_all = pd.read_csv("/Users/carlasuzanneweidner/Downloads/security_all.csv")
 # show data
 sec_daily_all.head()
 
