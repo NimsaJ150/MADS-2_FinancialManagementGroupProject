@@ -29,8 +29,9 @@ sec_daily = sec_daily.reset_index()
 sec_daily['adj_prccd'] = (sec_daily['prccd'] / sec_daily['ajexdi']) * sec_daily['trfd']
 sec_daily['year'] = sec_daily['datadate'].astype(str).str[0:4]
 stdev_csv = sec_daily.groupby(by=['LPERMNO', 'year'])['adj_prccd'].std()
-stdev_csv.reset_index()
+stdev_csv = stdev_csv.to_frame()
 
+stdev_csv.reset_index(inplace=True)
 
 stdev_csv.to_csv(path_or_buf='/Users/carlasuzanneweidner/Downloads/crsp_stdev_annual.csv', index=False)
 
