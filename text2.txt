@@ -1,0 +1,486 @@
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:             avg_return   R-squared:                        0.0014
+Estimator:                   PanelOLS   R-squared (Between):             -0.2539
+No. Observations:               14868   R-squared (Within):               0.0013
+Date:                Mon, Mar 14 2022   R-squared (Overall):             -0.0045
+Time:                        17:45:56   Log-likelihood                -6.546e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.3348
+Entities:                        1575   P-value                           0.1774
+Avg Obs:                       9.4400   Distribution:                F(14,13266)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.3348
+                                        P-value                           0.1774
+Time periods:                      14   Distribution:                F(14,13266)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        6.7829     3.0987     2.1889     0.0286      0.7090      12.857
+ROA                         -11.562     4.8889    -2.3650     0.0180     -21.145     -1.9794
+Tobins_Q                     0.2358     0.2676     0.8811     0.3783     -0.2887      0.7603
+Cash_Flow                    10.378     5.4743     1.8957     0.0580     -0.3528      21.108
+Leverage                 -8.368e-06   4.15e-05    -0.2016     0.8402  -8.971e-05   7.298e-05
+Investment                   0.3554     1.6387     0.2169     0.8283     -2.8568      3.5675
+Cash_Holdings               -0.0003     0.0038    -0.0724     0.9423     -0.0077      0.0072
+Div_over_Earn               -0.1017     0.2647    -0.3843     0.7008     -0.6205      0.4170
+SG_A                         0.6333     0.6404     0.9889     0.3227     -0.6220      1.8885
+aqc                       1.948e-05     0.0001     0.1356     0.8921     -0.0003      0.0003
+AGE                         -0.0769     0.0495    -1.5539     0.1202     -0.1740      0.0201
+dummy_founder               -0.3976     11.953    -0.0333     0.9735     -23.826      23.031
+dummy_chairman_president    -2.4992     2.5773    -0.9697     0.3322     -7.5510      2.5526
+ceo_group                   -1.5730     1.6953    -0.9279     0.3535     -4.8960      1.7499
+ceo_tenure                  -0.0002     0.0002    -1.3763     0.1687     -0.0006   9.748e-05
+============================================================================================
+
+F-test for Poolability: 1.1529
+P-value: 0.0001
+Distribution: F(1587,13266)
+
+Included effects: Entity, Time
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:             avg_return   R-squared:                        0.0014
+Estimator:                   PanelOLS   R-squared (Between):             -0.2414
+No. Observations:               14868   R-squared (Within):               0.0014
+Date:                Mon, Mar 14 2022   R-squared (Overall):             -0.0039
+Time:                        17:45:56   Log-likelihood                -6.548e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.2978
+Entities:                        1575   P-value                           0.1994
+Avg Obs:                       9.4400   Distribution:                F(14,13279)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.2978
+                                        P-value                           0.1994
+Time periods:                      14   Distribution:                F(14,13279)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        6.9008     2.9794     2.3162     0.0206      1.0608      12.741
+ROA                         -11.586     4.8824    -2.3730     0.0177     -21.156     -2.0157
+Tobins_Q                     0.2304     0.2598     0.8867     0.3753     -0.2789      0.7397
+Cash_Flow                    10.564     5.4642     1.9334     0.0532     -0.1464      21.275
+Leverage                  -5.76e-06  4.112e-05    -0.1401     0.8886  -8.636e-05   7.484e-05
+Investment                  -0.9363     1.6012    -0.5848     0.5587     -4.0748      2.2022
+Cash_Holdings               -0.0002     0.0038    -0.0414     0.9670     -0.0076      0.0073
+Div_over_Earn               -0.1011     0.2646    -0.3821     0.7024     -0.6197      0.4175
+SG_A                         0.6169     0.6402     0.9636     0.3353     -0.6380      1.8718
+aqc                      -4.313e-06     0.0001    -0.0301     0.9760     -0.0003      0.0003
+AGE                         -0.0793     0.0447    -1.7746     0.0760     -0.1668      0.0083
+dummy_founder                0.2993     11.956     0.0250     0.9800     -23.136      23.734
+dummy_chairman_president    -3.0701     2.5146    -1.2209     0.2222     -7.9991      1.8590
+ceo_group                   -1.4964     1.6959    -0.8824     0.3776     -4.8205      1.8277
+ceo_tenure                  -0.0002     0.0001    -1.2881     0.1977     -0.0005   9.651e-05
+============================================================================================
+
+F-test for Poolability: 1.1436
+P-value: 0.0001
+Distribution: F(1574,13279)
+
+Included effects: Entity
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:             avg_return   R-squared:                        0.0015
+Estimator:                   PanelOLS   R-squared (Between):              0.0074
+No. Observations:               14868   R-squared (Within):               0.0005
+Date:                Mon, Mar 14 2022   R-squared (Overall):              0.0015
+Time:                        17:45:56   Log-likelihood                -6.641e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.6368
+Entities:                        1575   P-value                           0.0618
+Avg Obs:                       9.4400   Distribution:                F(14,14840)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.6368
+                                        P-value                           0.0618
+Time periods:                      14   Distribution:                F(14,14840)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        3.1873     1.8221     1.7493     0.0803     -0.3842      6.7587
+ROA                         -8.4657     3.6547    -2.3164     0.0205     -15.629     -1.3021
+Tobins_Q                     0.0135     0.1567     0.0860     0.9315     -0.2938      0.3207
+Cash_Flow                    2.6296     3.8590     0.6814     0.4956     -4.9345      10.194
+Leverage                  -5.73e-06  1.199e-05    -0.4779     0.6327  -2.923e-05   1.777e-05
+Investment                  -0.6275     1.1577    -0.5420     0.5878     -2.8968      1.6418
+Cash_Holdings                0.0006     0.0026     0.2246     0.8223     -0.0046      0.0058
+Div_over_Earn               -0.2156     0.2478    -0.8700     0.3843     -0.7013      0.2701
+SG_A                         0.0028     0.0845     0.0327     0.9739     -0.1629      0.1684
+aqc                      -3.833e-05     0.0001    -0.3042     0.7610     -0.0003      0.0002
+AGE                         -0.0212     0.0264    -0.8030     0.4220     -0.0731      0.0306
+dummy_founder                0.1425     5.6541     0.0252     0.9799     -10.940      11.225
+dummy_chairman_president    -0.1895     1.8513    -0.1024     0.9185     -3.8183      3.4393
+ceo_group                   -0.5296     1.0116    -0.5235     0.6007     -2.5124      1.4533
+ceo_tenure               -9.307e-05  6.396e-05    -1.4552     0.1456     -0.0002    3.23e-05
+============================================================================================
+
+F-test for Poolability: 2.0661
+P-value: 0.0131
+Distribution: F(13,14840)
+
+Included effects: Time
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:              sd_return   R-squared:                        0.0015
+Estimator:                   PanelOLS   R-squared (Between):             -0.0109
+No. Observations:               14868   R-squared (Within):               0.0012
+Date:                Mon, Mar 14 2022   R-squared (Overall):             -0.0038
+Time:                        17:45:56   Log-likelihood                -9.355e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.4173
+Entities:                        1575   P-value                           0.1354
+Avg Obs:                       9.4400   Distribution:                F(14,13266)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.4173
+                                        P-value                           0.1354
+Time periods:                      14   Distribution:                F(14,13266)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                       -13.384     20.492    -0.6531     0.5137     -53.551      26.783
+ROA                          27.085     32.331     0.8377     0.4022     -36.288      90.458
+Tobins_Q                     2.1670     1.7695     1.2246     0.2207     -1.3015      5.6355
+Cash_Flow                    25.801     36.202     0.7127     0.4760     -45.159      96.762
+Leverage                     0.0002     0.0003     0.7704     0.4411     -0.0003      0.0007
+Investment                  -10.335     10.837    -0.9536     0.3403     -31.576      10.907
+Cash_Holdings               -0.0037     0.0251    -0.1488     0.8818     -0.0530      0.0455
+Div_over_Earn                0.7824     1.7502     0.4470     0.6549     -2.6482      4.2129
+SG_A                        -0.7045     4.2348    -0.1664     0.8679     -9.0052      7.5963
+aqc                          0.0001     0.0009     0.1125     0.9104     -0.0018      0.0020
+AGE                          0.2327     0.3274     0.7107     0.4773     -0.4091      0.8745
+dummy_founder                5.2595     79.043     0.0665     0.9469     -149.68      160.20
+dummy_chairman_president     4.0129     17.044     0.2354     0.8139     -29.395      37.421
+ceo_group                    10.242     11.211     0.9136     0.3609     -11.733      32.217
+ceo_tenure                  -0.0003     0.0011    -0.3148     0.7529     -0.0025      0.0018
+============================================================================================
+
+F-test for Poolability: 7.4650
+P-value: 0.0000
+Distribution: F(1587,13266)
+
+Included effects: Entity, Time
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:              sd_return   R-squared:                        0.0013
+Estimator:                   PanelOLS   R-squared (Between):             -0.0116
+No. Observations:               14868   R-squared (Within):               0.0013
+Date:                Mon, Mar 14 2022   R-squared (Overall):             -0.0033
+Time:                        17:45:56   Log-likelihood                -9.357e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.2077
+Entities:                        1575   P-value                           0.2613
+Avg Obs:                       9.4400   Distribution:                F(14,13279)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.2077
+                                        P-value                           0.2613
+Time periods:                      14   Distribution:                F(14,13279)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                       -9.0181     19.708    -0.4576     0.6473     -47.649      29.613
+ROA                          28.696     32.297     0.8885     0.3743     -34.610      92.002
+Tobins_Q                     2.2222     1.7187     1.2930     0.1960     -1.1466      5.5910
+Cash_Flow                    15.161     36.145     0.4194     0.6749     -55.688      86.009
+Leverage                     0.0002     0.0003     0.9023     0.3669     -0.0003      0.0008
+Investment                  -10.011     10.592    -0.9452     0.3446     -30.772      10.750
+Cash_Holdings               -0.0040     0.0251    -0.1602     0.8727     -0.0533      0.0452
+Div_over_Earn                0.6104     1.7500     0.3488     0.7273     -2.8198      4.0406
+SG_A                        -1.0798     4.2350    -0.2550     0.7987     -9.3810      7.2214
+aqc                          0.0001     0.0009     0.1392     0.8893     -0.0017      0.0020
+AGE                          0.1683     0.2954     0.5698     0.5688     -0.4108      0.7475
+dummy_founder                10.095     79.086     0.1276     0.8984     -144.92      165.11
+dummy_chairman_president     15.535     16.634     0.9339     0.3504     -17.070      48.139
+ceo_group                    9.3553     11.218     0.8340     0.4043     -12.633      31.344
+ceo_tenure                  -0.0002     0.0009    -0.2057     0.8370     -0.0021      0.0017
+============================================================================================
+
+F-test for Poolability: 7.4922
+P-value: 0.0000
+Distribution: F(1574,13279)
+
+Included effects: Entity
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:              sd_return   R-squared:                        0.0014
+Estimator:                   PanelOLS   R-squared (Between):              0.0067
+No. Observations:               14868   R-squared (Within):              -0.0029
+Date:                Mon, Mar 14 2022   R-squared (Overall):              0.0013
+Time:                        17:45:57   Log-likelihood                -9.828e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.4588
+Entities:                        1575   P-value                           0.1175
+Avg Obs:                       9.4400   Distribution:                F(14,14840)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.4588
+                                        P-value                           0.1175
+Time periods:                      14   Distribution:                F(14,14840)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        9.6866     15.546     0.6231     0.5332     -20.786      40.160
+ROA                         -20.665     31.183    -0.6627     0.5075     -81.788      40.457
+Tobins_Q                     1.2346     1.3374     0.9231     0.3559     -1.3869      3.8561
+Cash_Flow                   -34.462     32.926    -1.0466     0.2953     -99.002      30.077
+Leverage                  2.858e-05     0.0001     0.2794     0.7800     -0.0002      0.0002
+Investment                  -9.6797     9.8783    -0.9799     0.3272     -29.042      9.6829
+Cash_Holdings               -0.0046     0.0225    -0.2052     0.8374     -0.0488      0.0395
+Div_over_Earn               -0.0062     2.1142    -0.0029     0.9977     -4.1503      4.1380
+SG_A                        -0.2833     0.7212    -0.3929     0.6944     -1.6970      1.1303
+aqc                      -2.238e-05     0.0011    -0.0208     0.9834     -0.0021      0.0021
+AGE                          0.2378     0.2257     1.0539     0.2920     -0.2045      0.6802
+dummy_founder               -2.3500     48.243    -0.0487     0.9612     -96.912      92.212
+dummy_chairman_president    -13.744     15.796    -0.8701     0.3843     -44.706      17.218
+ceo_group                    0.3260     8.6315     0.0378     0.9699     -16.593      17.245
+ceo_tenure                  -0.0012     0.0005    -2.2270     0.0260     -0.0023     -0.0001
+============================================================================================
+
+F-test for Poolability: 1.3065
+P-value: 0.2002
+Distribution: F(13,14840)
+
+Included effects: Time
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:             avg_return   R-squared:                        0.0008
+Estimator:                   PanelOLS   R-squared (Between):             -0.0115
+No. Observations:               14868   R-squared (Within):               0.0008
+Date:                Mon, Mar 14 2022   R-squared (Overall):             -0.0008
+Time:                        17:45:57   Log-likelihood                -6.546e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      2.1786
+Entities:                        1575   P-value                           0.0536
+Avg Obs:                       9.4400   Distribution:                 F(5,13275)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             2.1786
+                                        P-value                           0.0536
+Time periods:                      14   Distribution:                 F(5,13275)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        7.8239     3.0407     2.5731     0.0101      1.8637      13.784
+AGE                         -0.0757     0.0495    -1.5306     0.1259     -0.1727      0.0213
+ceo_tenure                  -0.0002     0.0002    -1.4317     0.1523     -0.0006   8.816e-05
+dummy_chairman_president    -2.4514     2.5740    -0.9524     0.3409     -7.4968      2.5940
+dummy_chairman               0.1402     11.676     0.0120     0.9904     -22.747      23.027
+ceo_group                   -1.6440     1.6946    -0.9701     0.3320     -4.9657      1.6777
+============================================================================================
+
+F-test for Poolability: 1.1596
+P-value: 0.0000
+Distribution: F(1587,13275)
+
+Included effects: Entity, Time
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:             avg_return   R-squared:                        0.0008
+Estimator:                   PanelOLS   R-squared (Between):             -0.0116
+No. Observations:               14868   R-squared (Within):               0.0008
+Date:                Mon, Mar 14 2022   R-squared (Overall):             -0.0006
+Time:                        17:45:57   Log-likelihood                -6.548e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      2.0554
+Entities:                        1575   P-value                           0.0678
+Avg Obs:                       9.4400   Distribution:                 F(5,13288)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             2.0554
+                                        P-value                           0.0678
+Time periods:                      14   Distribution:                 F(5,13288)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        7.5255     2.9228     2.5748     0.0100      1.7964      13.255
+AGE                         -0.0741     0.0443    -1.6722     0.0945     -0.1609      0.0128
+ceo_tenure                  -0.0002     0.0001    -1.4685     0.1420     -0.0005       7e-05
+dummy_chairman_president    -3.0855     2.5106    -1.2290     0.2191     -8.0067      1.8357
+dummy_chairman               0.5964     11.677     0.0511     0.9593     -22.292      23.485
+ceo_group                   -1.5740     1.6952    -0.9285     0.3532     -4.8969      1.7489
+============================================================================================
+
+F-test for Poolability: 1.1503
+P-value: 0.0001
+Distribution: F(1574,13288)
+
+Included effects: Entity
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:             avg_return   R-squared:                        0.0004
+Estimator:                   PanelOLS   R-squared (Between):           9.394e-05
+No. Observations:               14868   R-squared (Within):               0.0004
+Date:                Mon, Mar 14 2022   R-squared (Overall):              0.0003
+Time:                        17:45:57   Log-likelihood                -6.642e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.0935
+Entities:                        1575   P-value                           0.3616
+Avg Obs:                       9.4400   Distribution:                 F(5,14849)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.0935
+                                        P-value                           0.3616
+Time periods:                      14   Distribution:                 F(5,14849)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        3.0135     1.7587     1.7134     0.0867     -0.4339      6.4608
+AGE                         -0.0208     0.0263    -0.7916     0.4286     -0.0723      0.0307
+ceo_tenure                  -0.0001  6.365e-05    -1.6889     0.0913     -0.0002   1.727e-05
+dummy_chairman_president     0.1606     1.8486     0.0869     0.9308     -3.4629      3.7842
+dummy_chairman              -0.4233     5.6466    -0.0750     0.9402     -11.491      10.645
+ceo_group                   -0.6124     1.0113    -0.6056     0.5448     -2.5947      1.3698
+============================================================================================
+
+F-test for Poolability: 2.1071
+P-value: 0.0110
+Distribution: F(13,14849)
+
+Included effects: Time
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:              sd_return   R-squared:                        0.0001
+Estimator:                   PanelOLS   R-squared (Between):             1.3e-05
+No. Observations:               14868   R-squared (Within):               0.0001
+Date:                Mon, Mar 14 2022   R-squared (Overall):          -3.264e-05
+Time:                        17:45:57   Log-likelihood                -9.356e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      0.3283
+Entities:                        1575   P-value                           0.8962
+Avg Obs:                       9.4400   Distribution:                 F(5,13275)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             0.3283
+                                        P-value                           0.8962
+Time periods:                      14   Distribution:                 F(5,13275)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                       -10.399     20.116    -0.5169     0.6052     -49.829      29.032
+AGE                          0.2670     0.3273     0.8159     0.4146     -0.3745      0.9085
+ceo_tenure                  -0.0003     0.0011    -0.2308     0.8175     -0.0024      0.0019
+dummy_chairman_president     1.2864     17.029     0.0755     0.9398     -32.092      34.665
+dummy_chairman              -7.5406     77.246    -0.0976     0.9222     -158.95      143.87
+ceo_group                    10.600     11.211     0.9455     0.3444     -11.375      32.576
+============================================================================================
+
+F-test for Poolability: 7.4651
+P-value: 0.0000
+Distribution: F(1587,13275)
+
+Included effects: Entity, Time
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:              sd_return   R-squared:                        0.0002
+Estimator:                   PanelOLS   R-squared (Between):             -0.0005
+No. Observations:               14868   R-squared (Within):               0.0002
+Date:                Mon, Mar 14 2022   R-squared (Overall):          -2.145e-05
+Time:                        17:45:57   Log-likelihood                -9.357e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      0.4126
+Entities:                        1575   P-value                           0.8404
+Avg Obs:                       9.4400   Distribution:                 F(5,13288)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             0.4126
+                                        P-value                           0.8404
+Time periods:                      14   Distribution:                 F(5,13288)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                       -8.1371     19.339    -0.4208     0.6739     -46.044      29.770
+AGE                          0.2439     0.2930     0.8325     0.4051     -0.3304      0.8183
+ceo_tenure                  -0.0003     0.0009    -0.3075     0.7585     -0.0021      0.0016
+dummy_chairman_president     12.932     16.612     0.7785     0.4363     -19.630      45.493
+dummy_chairman              -5.1884     77.262    -0.0672     0.9465     -156.63      146.26
+ceo_group                    9.7240     11.217     0.8669     0.3860     -12.262      31.710
+============================================================================================
+
+F-test for Poolability: 7.4963
+P-value: 0.0000
+Distribution: F(1574,13288)
+
+Included effects: Entity
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:              sd_return   R-squared:                        0.0004
+Estimator:                   PanelOLS   R-squared (Between):              0.0006
+No. Observations:               14868   R-squared (Within):              -0.0001
+Date:                Mon, Mar 14 2022   R-squared (Overall):              0.0002
+Time:                        17:45:57   Log-likelihood                -9.829e+04
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1.2269
+Entities:                        1575   P-value                           0.2934
+Avg Obs:                       9.4400   Distribution:                 F(5,14849)
+Min Obs:                       1.0000                                           
+Max Obs:                       38.000   F-statistic (robust):             1.2269
+                                        P-value                           0.2934
+Time periods:                      14   Distribution:                 F(5,14849)
+Avg Obs:                       1062.0                                           
+Min Obs:                       651.00                                           
+Max Obs:                       1235.0                                           
+                                                                                
+                                    Parameter Estimates                                     
+============================================================================================
+                          Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+--------------------------------------------------------------------------------------------
+const                        6.6216     15.005     0.4413     0.6590     -22.789      36.032
+AGE                          0.2463     0.2241     1.0994     0.2716     -0.1928      0.6855
+ceo_tenure                  -0.0013     0.0005    -2.3874     0.0170     -0.0024     -0.0002
+dummy_chairman_president    -11.202     15.772    -0.7103     0.4775     -42.116      19.712
+dummy_chairman              -5.7379     48.173    -0.1191     0.9052     -100.16      88.688
+ceo_group                   -0.0049     8.6277    -0.0006     0.9995     -16.916      16.907
+============================================================================================
+
+F-test for Poolability: 1.4160
+P-value: 0.1428
+Distribution: F(13,14849)
+
+Included effects: Time
