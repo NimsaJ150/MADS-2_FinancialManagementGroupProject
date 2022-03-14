@@ -32,7 +32,7 @@ stdev_csv = sec_daily.groupby(by=['LPERMNO', 'year'])['adj_prccd'].std()
 stdev_csv = stdev_csv.to_frame()
 
 stdev_csv.reset_index(inplace=True)
-
+stdev_csv = stdev_csv.loc[stdev_csv['adj_prccd']<50]
 stdev_csv.to_csv(path_or_buf='/Users/carlasuzanneweidner/Downloads/crsp_stdev_annual.csv', index=False)
 
 
