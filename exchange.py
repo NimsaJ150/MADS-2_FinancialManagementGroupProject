@@ -9,7 +9,8 @@ Load data
 # import data
 ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021_MTL.csv")
 company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
-price_data_raw = pd.read_csv("data/return_annual.csv")
+annual_return_price_data_raw = pd.read_csv("data/Compustat_annual_return.csv")
+annual_stdev_price_data_raw = pd.read_csv("data/crsp_stdev_annual.csv")
 
 company_data_raw.head()
 ceo_data_raw.head()
@@ -20,8 +21,9 @@ company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA', 'Tobins_Q', 'Cash_
 ceo_data_raw_columns = ceo_data_raw.columns
 ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO',
             'CONAME', 'EXECID']
-price_data_raw_columns = price_data_raw.columns
-price_cols = []
+
+annual_return_cols = ['LPERMNO', 'fyear', 'prcc_pcchg']
+annual_stdev_cols = ['LPERMNO', 'year', 'adj_prccd']
 
 # filter data
 company_data = company_data_raw[company_cols]
@@ -36,10 +38,19 @@ ceo_data = ceo_data[ceo_data.CEOANN == "CEO"]
 # drop age with nans - about 100 rows removed
 ceo_data = ceo_data[ceo_data['AGE'].notna()]
 
-price_data = price_data_raw
+annual_return_price_data = annual_return_price_data_raw[annual_return_cols]
+annual_return_price_data.rename(columns={'prcc_pcchg': 'avg_return'}, inplace=True)
+
+annual_stdev_price_data = annual_stdev_price_data_raw[annual_stdev_cols]
+annual_stdev_price_data.rename(columns={'adj_prccd': 'sd_return'}, inplace=True)
+
 
 # join data
-data_joined = company_data.join(price_data.set_index(['LPERMNO', 'year']), on=['LPERMNO', 'fyear'], how='inner',
+data_joined = company_data.join(annual_return_price_data.set_index(['LPERMNO', 'fyear']), on=['LPERMNO', 'fyear'], how='inner',
+                                lsuffix='',
+                                rsuffix='', sort=False)
+
+data_joined = data_joined.join(annual_stdev_price_data.set_index(['LPERMNO', 'year']), on=['LPERMNO', 'fyear'], how='inner',
                                 lsuffix='',
                                 rsuffix='', sort=False)
 
