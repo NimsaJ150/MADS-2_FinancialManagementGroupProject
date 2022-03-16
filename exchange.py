@@ -8,22 +8,24 @@ Load data
 """
 # import data
 ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021_MTL.csv")
-company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_new.csv")
+company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_NEW_winsor.csv")
 annual_return_price_data_raw = pd.read_csv("data/Compustat_annual_return.csv")
-annual_stdev_price_data_raw = pd.read_csv("data/crsp_stdev_annual.csv")
+annual_stdev_price_data_raw = pd.read_csv("data/CRSP_Standard_Deviation_by_Year.csv")
 
 company_data_raw.head()
 ceo_data_raw.head()
 
 company_data_raw_columns = company_data_raw.columns
-company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA', 'Tobins_Q', 'Cash_Flow',
-                'Leverage', 'Investment', 'Cash_Holdings', 'Div_over_Earn', 'SG_A', 'aqc']
+# company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA', 'Tobins_Q', 'Cash_Flow',
+#                 'Leverage', 'Investment', 'Cash_Holdings', 'Div_over_Earn', 'SG_A', 'aqc']
+company_cols = ['GVKEY', 'LPERMNO', 'prcc_f', 'fyear', 'ROA_w01_w99', 'Tobins_Q_w95', 'CF_w01_w99',
+                'Lev_w05_w95', 'Inv_w01_w99', 'CashHold_w95', 'DoE_w01_w99', 'Acquisitions']
 ceo_data_raw_columns = ceo_data_raw.columns
 ceo_cols = ['GVKEY', 'CO_PER_ROL', 'YEAR', 'AGE', 'BECAMECEO', 'TITLE', 'CEOANN', 'LEFTOFC', 'LEFTCO', 'JOINED_CO',
             'CONAME', 'EXECID']
 
 annual_return_cols = ['LPERMNO', 'fyear', 'prcc_pcchg']
-annual_stdev_cols = ['LPERMNO', 'year', 'adj_prccd']
+annual_stdev_cols = ['LPERMNO', 'year', 'stand_dev']
 
 # filter data
 company_data = company_data_raw[company_cols]
@@ -42,7 +44,7 @@ annual_return_price_data = annual_return_price_data_raw[annual_return_cols]
 annual_return_price_data.rename(columns={'prcc_pcchg': 'avg_return'}, inplace=True)
 
 annual_stdev_price_data = annual_stdev_price_data_raw[annual_stdev_cols]
-annual_stdev_price_data.rename(columns={'adj_prccd': 'sd_return'}, inplace=True)
+annual_stdev_price_data.rename(columns={'stand_dev': 'sd_return'}, inplace=True)
 
 
 # join data
