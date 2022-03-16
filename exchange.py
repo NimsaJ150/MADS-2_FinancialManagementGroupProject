@@ -7,7 +7,7 @@ from sklearn.linear_model import LinearRegression
 Load data
 """
 # import data
-ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021_MTL.csv")
+ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021.csv")
 company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_NEW_winsor.csv")
 annual_return_price_data_raw = pd.read_csv("data/Compustat_annual_return.csv")
 annual_stdev_price_data_raw = pd.read_csv("data/CRSP_Standard_Deviation_by_Year.csv")
@@ -59,6 +59,7 @@ data_joined = data_joined.join(annual_stdev_price_data.set_index(['LPERMNO', 'ye
 data_joined = data_joined.join(ceo_data.set_index(['GVKEY', 'YEAR']), on=['GVKEY', 'fyear'], how='inner', lsuffix='',
                                rsuffix='', sort=False)
 
+# --------pls dont delete this (Irene)
 # drop rows with 2021 - because there are some values for PRCC_F data missing
 # print(data_joined.shape)
 data_joined = data_joined[data_joined["fyear"] != 2021]
