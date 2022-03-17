@@ -208,4 +208,4 @@ data_win['DoE_w01_w99'].describe()
 print(data_win.head())
 print(data_win.info())
 
-data_win.to_csv('/Users/mythulam/Desktop/Masters/02_Spring_2022/03_Guided_Studies_in_Financial_Management/Group_Project/Data/Compustat/CCM_Fundamentals_Annual_2006_-_2021_NEW_winsor.csv', index=False)
+data_win.to_csv('/Users/mythulam/Desktop/Masters/02_Spring_2022/03_Guided_Studies_in_Financial_Management/Group_Project/Data/Compustat/CCM_Fundamentals_Annual_2006_-_2021_winsorized.csv', index=False)

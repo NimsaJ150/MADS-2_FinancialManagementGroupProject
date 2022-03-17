@@ -69,4 +69,4 @@ return_sd = sec_daily.groupby(by=['LPERMNO', 'year'])['return'].std()
 return_sd.head()
 
 # create new CSV with results
-return_sd.to_csv('/Users/mythulam/Desktop/Masters/02_Spring_2022/03_Guided_Studies_in_Financial_Management/Group_Project/Data/CRSP/CRSP_Standard_Deviation_by_Year.csv')
+return_sd.to_csv('/Users/mythulam/Desktop/Masters/02_Spring_2022/03_Guided_Studies_in_Financial_Management/Group_Project/Data/CRSP/CRSP_annual_standard_deviation.csv')

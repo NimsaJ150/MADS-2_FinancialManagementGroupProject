@@ -8,9 +8,9 @@ Load data
 """
 # import data
 ceo_data_raw = pd.read_csv("data/Execucomp_2006_-_2021.csv")
-company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_NEW_winsor.csv")
+company_data_raw = pd.read_csv("data/CCM_Fundamentals_Annual_2006_-_2021_winsorized.csv")
 annual_return_price_data_raw = pd.read_csv("data/Compustat_annual_return.csv")
-annual_stdev_price_data_raw = pd.read_csv("data/CRSP_Standard_Deviation_by_Year.csv")
+annual_stdev_price_data_raw = pd.read_csv("data/CRSP_annual_standard_deviation.csv")
 
 company_data_raw.head()
 ceo_data_raw.head()
