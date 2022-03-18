@@ -5,7 +5,7 @@ import numpy as np
 from scipy.stats.mstats import winsorize
 
 data = pd.read_csv(
-    '/Users/mythulam/Desktop/Masters/02_Spring_2022/03_Guided_Studies_in_Financial_Management/Group_Project/Data/Compustat/CCM_Fundamentals_Annual_2006_-_2021_NEW.csv')
+    'data/CCM_Fundamentals_Annual_2006_-_2021_normal.csv')
 
 # Company Features - ROA, Tobins_Q, Cash_Flow, Leverage, Investment, Cash_Holdings, Div_over_Earn, aqc
 

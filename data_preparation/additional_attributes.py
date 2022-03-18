@@ -52,7 +52,7 @@ def sg_a(row):
 # def interest_coverage(row):
 #     return row['ebitda'] / row['tie'] if row['tie'] != 0 else 0
 
-data = pd.read_csv('CCM_Fundamentals_Annual_2006_-_2021_clipped.csv')
+data = pd.read_csv('data_raw/CCM_Fundamentals_Annual_2006_-_2021_clipped.csv')
 
 data['ROA'] = data.apply(lambda row: roa(row), axis=1)
 data['Tobins_Q'] = data.apply(lambda row: tobins_q(row), axis=1)
@@ -63,4 +63,4 @@ data['Cash_Holdings'] = data.apply(lambda row: cash_holdings(row), axis=1)
 data['Div_over_Earn'] = data.apply(lambda row: div_over_earn(row), axis=1)
 data['SG_A'] = data.apply(lambda row: sg_a(row), axis=1)
 
-data.to_csv('data/CCM_Fundamentals_Annual_2006_-_2021_new.csv')
+data.to_csv('data/CCM_Fundamentals_Annual_2006_-_2021_normal.csv')

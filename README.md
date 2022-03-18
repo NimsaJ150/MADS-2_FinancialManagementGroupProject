@@ -24,3 +24,9 @@ This repository has the following structure:
 |-- ceo_project.ipnb                                        Main workbook containing the models
 |-- README.md                                               Short info 
 ```
+
+In order to reproduce our results, please create the new folder ```data_raw``` and put the externally provided files into the ```data_raw``` folder.
+Then run all the files in the ```data_preparation``` folder.
+The prepared data files are then stored in the ```data``` folder.
+After that, you can run the ```ceo_project.ipynb```.
+The models' results are additionally manually stored in the ```results``` folder.
