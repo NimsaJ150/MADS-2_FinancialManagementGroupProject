@@ -12,6 +12,8 @@ data = pd.read_csv(
 """
 FIX LEVERAGE AND ACQUISITION VARIABLES
 """
+
+
 # fix leverage
 
 
@@ -23,6 +25,7 @@ data['Leverage'] = data.apply(lambda row: leverage(row), axis=1)
 
 # check leverage
 data[['dltt', 'dlc', 'ceq', 'Leverage']].head()
+
 
 # fix acquisitions to number of acquisitions
 
@@ -52,19 +55,22 @@ data[["aqc"]].describe()
 """
 DETERMINE WINSOR QUANTILES
 """
+
+
 # outer fences of variables
 
 
 def fences(df, variable_name):
     q1 = df[variable_name].quantile(0.25)
     q3 = df[variable_name].quantile(0.75)
-    iqr = q3-q1
-    outer_fence = 3*iqr
-    outer_fence_le = q1-outer_fence
-    outer_fence_ue = q3+outer_fence
+    iqr = q3 - q1
+    outer_fence = 3 * iqr
+    outer_fence_le = q1 - outer_fence
+    outer_fence_ue = q3 + outer_fence
     print(outer_fence_le)
     print(outer_fence_ue)
     return outer_fence_le, outer_fence_ue
+
 
 # quantile values
 
@@ -166,7 +172,8 @@ def winsorize_with_pandas(s, limits):
     Tuple of the percentages to cut on each side of the array, 
     with respect to the number of unmasked data, as floats between 0. and 1
     """
-    return s.clip(lower=s.quantile(limits[0], interpolation='lower'), upper=s.quantile(1-limits[1], interpolation='higher'))
+    return s.clip(lower=s.quantile(limits[0], interpolation='lower'),
+                  upper=s.quantile(1 - limits[1], interpolation='higher'))
 
 
 # winsorize ROA
@@ -208,4 +215,6 @@ data_win['DoE_w01_w99'].describe()
 print(data_win.head())
 print(data_win.info())
 
-data_win.to_csv('/Users/mythulam/Desktop/Masters/02_Spring_2022/03_Guided_Studies_in_Financial_Management/Group_Project/Data/Compustat/CCM_Fundamentals_Annual_2006_-_2021_winsorized.csv', index=False)
+data_win.to_csv(
+    'data/CCM_Fundamentals_Annual_2006_-_2021_winsorized.csv',
+    index=False)

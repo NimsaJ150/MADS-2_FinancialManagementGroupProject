@@ -46,8 +46,7 @@ Process Data
 sec_daily['year'] = sec_daily['datadate'].astype(str).str[0:4]
 
 # calculate adjusted closing price
-sec_daily['adj_prccd'] = (
-    sec_daily['prccd'] / sec_daily['ajexdi']) * sec_daily['trfd']
+sec_daily['adj_prccd'] = (sec_daily['prccd'] / sec_daily['ajexdi']) * sec_daily['trfd']
 
 # sort data by datadate
 sec_daily = sec_daily.sort_values(
@@ -60,7 +59,7 @@ sec_daily['prev_adj_prccd'] = sec_daily.groupby(by=['LPERMNO'])[
 sec_daily[['LPERMNO', 'datadate', 'adj_prccd', 'prev_adj_prccd']].head()
 
 # calculate daily return
-sec_daily['return'] = sec_daily['adj_prccd']/sec_daily['prev_adj_prccd'] - 1
+sec_daily['return'] = sec_daily['adj_prccd'] / sec_daily['prev_adj_prccd'] - 1
 sec_daily[['LPERMNO', 'datadate', 'adj_prccd',
            'prev_adj_prccd', 'return']].head()
 
@@ -69,4 +68,5 @@ return_sd = sec_daily.groupby(by=['LPERMNO', 'year'])['return'].std()
 return_sd.head()
 
 # create new CSV with results
-return_sd.to_csv('/Users/mythulam/Desktop/Masters/02_Spring_2022/03_Guided_Studies_in_Financial_Management/Group_Project/Data/CRSP/CRSP_annual_standard_deviation.csv')
+return_sd.to_csv(
+    'data/CRSP_annual_standard_deviation.csv')
